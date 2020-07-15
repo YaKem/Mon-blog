@@ -1,0 +1,14 @@
+<h2><span>Nouvelle catégorie</span></h2>
+<form class="form-common" action="create_category" method="post">
+    <ul>
+        <input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
+        <li>
+            <label for="name">Nom:</label>
+            <input id="name" type="text" name="name" placeholder="Saisir le nom" />
+        </li>
+        <li>
+            <input class="btn btn-blue" type="submit" name="submit" value="Créer" />
+            <a href="index.php?r=show_admin_board" class="btn btn-red" data-tab="2" title="Administration">Annuler</a>
+        </li>
+    </ul>
+<form>

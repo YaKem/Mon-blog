@@ -1,0 +1,13 @@
+<div id="search">
+    <?php if(isset($results) && !empty($results)): ?>
+        <?php foreach($results as $result): ?>
+            <article>
+                <h2><span><?= htmlspecialchars($result['title']) ?></span></h2>
+                <p><?= substr(str_replace(ucfirst($keyword), '<span>' . ucfirst($keyword) . '</span>', str_replace($keyword, '<span>' . $keyword . '</span>', nl2br(htmlspecialchars($result['content'])))), 0, 700) ?></p>
+                <a class="btn btn-blue" href="index.php?r=article/id/<?= intval($result['id']) ?>">Voir l'article</a>
+            </article>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Vous n'avez aucun résultat pour le terme <?= $keyword ?>.</p>
+    <?php endif; ?>
+</div>

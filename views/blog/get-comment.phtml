@@ -1,0 +1,16 @@
+<h2><span>Commentaires (<?= $count ?>)</span></h2>
+<?php foreach($data as $comment): ?>
+    <div class="comment" style="margin-left: <?= ($comment['comment_parent_id'] != 0) ? '50px' : '0' ?>">
+        <div class="comment-title">
+            <h4><?= htmlspecialchars(\FormatDate::format($comment['created_at'])) ?>, Par <?= htmlspecialchars($comment['name']) ?></h4>
+        </div>
+        <div class="comment-content">
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+        </div>
+        <?php if($comment['comment_parent_id'] == 0): ?>
+            <div class="comment-btn">
+                <button class="btn btn-blue btn-reply" type="button" data-idcomment="<?= intval($comment['id']) ?>">Reply</button>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endforeach ?>

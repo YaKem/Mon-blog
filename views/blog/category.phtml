@@ -1,0 +1,15 @@
+<div id="category">
+    <?php if($results): ?>
+        <h1><?= htmlspecialchars($results[0]['category']) ?></h1>
+        <?php foreach($results as $result): ?>
+            <article>
+                <h2><span><?= htmlspecialchars($result['title']) ?></span></h2>
+                <h4><?= htmlspecialchars(\FormatDate::format($result['created_at'])) ?>, Par <?= htmlspecialchars($result['author']) ?></h4>
+                <p><?= substr(nl2br(htmlspecialchars($result['content'])), 0, 500) ?></p>
+                <a class="btn btn-blue" href="index?r=article/id/<?= intval($result['article_id']) ?>">Lire la suite</a>
+            </article>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Aucun article de la catégorie sélectionnée</p>
+    <?php endif ?>
+</div>

@@ -1,0 +1,75 @@
+<section id="home">
+    <div id="text">
+        <h1>Yacine KEMOUCHE</h1>
+        <p>Développeur - Intégrateur</p>
+        <p>En Réalisation </p>
+        <p>D'Applications Web</p>
+        <a href="#aboutMe">A mon sujet <i class="fas fa-angle-double-right"></i></a> 
+    </div>
+</section>
+<div id="container">
+    <article>
+        <div id="aboutMe"></div>
+        <h2>Qui suis-je ?</h2>
+        <p>Passionné par le développement web, j'ai une formation diversifiée en HTML, CSS, JAVA SCRIPT (JQUERY, AJAX), PHP, SQL, BOOTSTRAP, WORDPRESS. Mon expérience m'a permis de réaliser des projets complets, chaque nouveau projet est une nouvelle occasion de mettre en oeuvre mon savoir-faire.</p>
+    </article>
+    <hr>
+    <section id="achievements">
+        <h2>Exemples de réalisations</h2>
+        <figure>
+            <img src="img/mp.jpg" />
+            <figcaption>
+                <p>Un gestionnaire de stock pour entreprises !</p>
+                <a href="http://mymanager.alwaysdata.net/login.php">Plus d'infos<i class="fas fa-chevron-circle-right"></i></a>
+            </figcaption>
+        </figure>        
+        <figure>
+            <img src="img/blog.jpg" />
+            <figcaption>
+                <p>Un blog pour les passionnés de généalogie !</p>
+                <a href="#">Plus d'infos<i class="fas fa-chevron-circle-right"></i></a>
+            </figcaption>
+        </figure>
+        <figure>
+            <img src="img/restaurant.jpg" />
+            <figcaption>
+                <p>Un site pour restaurant et les amateurs de gastronomie !</p>
+                <a href="#">Plus d'infos<i class="fas fa-chevron-circle-right"></i></a>
+            </figcaption>
+        </figure>
+        <figure>
+            <img src="img/boutique.jpg" />
+            <figcaption>
+                <p>Une vitrine pour un e-commerce !</p>
+                <a href="#">Plus d'infos<i class="fas fa-chevron-circle-right"></i></a>
+            </figcaption>                  
+        </figure>               
+    </section>
+    <hr>
+    <h2>Me contacter</h2>
+    <form class="generic-form" id="formContact" method="post" action="addContact.php">
+        <fieldset>
+            <ul>
+                <li>
+                    <label for="lastname">Nom:</label>
+                    <input type="text" id="lastname" name="lastName" required />
+                </li>
+                <li>
+                    <label for="firstname">Prénom:</label>
+                    <input type="text" id="firstname" name="firstName" required />
+                </li>
+                <li>
+                    <label for="mail">Email:</label>
+                    <input type="text" id="mail" name="email" required />
+                </li>
+                <li>
+                    <label for="msg">Message:</label>
+                    <textarea id="msg" name="message" required></textarea>
+                </li>
+                <li>
+                    <input type="submit" value="Envoyer" />
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+</div>

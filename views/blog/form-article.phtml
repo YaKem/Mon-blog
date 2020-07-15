@@ -1,0 +1,40 @@
+<div class="form-common">
+    <h1><?= $title ?></h1>
+    <form action="create_article" method="post" enctype="multipart/form-data">
+        <ul>
+            <input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
+            <input type="hidden" name="id" value="<?= $article['id'] ?? '' ?>" />
+            <input type="hidden" name="ancientFileName" value="<?= htmlspecialchars($article['image'] ?? '') ?>" />
+            <li>
+                <label for="name">Auteur</label>
+                <input type="text" id="name" name="author" value="<?= htmlspecialchars($article['author'] ?? '') ?><?= htmlspecialchars($_SESSION['inputs']['author'] ?? '') ?>" />
+            </li>
+            <li>
+                <label for="title">Titre</label>
+                <input type="text" id="nom" name="title" value="<?= htmlspecialchars($article['title'] ?? '') ?><?= htmlspecialchars($_SESSION['inputs']['title'] ?? '') ?>" />
+            </li>
+            <li>
+                <label for="content">Contenu de l'article</label>
+                <textarea type="text" id="content" name="content" cols="30" rows="10"><?= htmlspecialchars($article['content'] ?? '') ?><?= htmlspecialchars($_SESSION['inputs']['content'] ?? '') ?></textarea>
+            </li>
+            <li>
+                <label for="category">Catégorie</label>
+                <select id="category" name="category">
+                    <option value="">Choisir une catégorie</option>
+                    <?php foreach($categories as $k => $category): ?>
+                        <option value="<?= intval($category['id']) ?>" <?php if(!empty($article['category_id'])){if($category['id'] == $article['category_id']){echo 'selected="selected"';}}?><?php if(!empty($_SESSION['category'])){if($category['id'] == $_SESSION['category']){echo 'selected="selected"';}} ?>><?= htmlspecialchars($category['category_name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </li>
+            <li>
+                <label for="fileName">Choisir un nom de fichier</label>
+                <input type="text" id="fileName" name="fileName" value="<?= htmlspecialchars((!empty($article['image'])) ? substr($article['image'], 0, strrpos($article['image'], '.')) : '') ?>" />
+                <input type="file" name="fichier" id="" />
+            </li>
+            <li>
+                <input type="submit" class="btn btn-blue" value="<?= $label ?>" />
+                <a href="index.php?r=show_admin_board" class="btn btn-red" data-tab="0" title="Adminsitration">Annuler</a>
+            </li>
+        </ul>
+    </form>
+</div>

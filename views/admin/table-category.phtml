@@ -1,0 +1,26 @@
+<h2><span>Gestion des catégories</span></h2>
+<a href="index.php?r=form_category" class="btn btn-blue" data-tab="2" title="Créer une catégorie">Créer une catégorie</i></a>
+<?php if(!empty($categories)): ?>
+    <table id="tcategory">
+        <thead>              
+            <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $ind = 0; ?>
+            <?php foreach($categories as $category): ?>
+                <?php $ind++; ?>
+                <tr>
+                    <td><?= $ind ?></td>
+                    <td><?= htmlspecialchars($category['category_name']) ?></td>
+                    <td><a href="index.php?r=delete_category/id/<?= intval($category['id']) ?>" data-tab="2" title="Supprimer la catégorie"><i class="fas fa-trash"></i></a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>Aucune catégorie</p>
+<?php endif ?>

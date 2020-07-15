@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mon blog</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="language" content="French">
+        <meta name="description" content="It is a website about sport">
+        <meta name="keywords" content="blog">
+        <meta name="author" content="Yacine">
+        <meta name="theme-color" content="Blue">
+        <link rel="stylesheet" href="ASSETS/fontawesome-5.12.0/css/all.min.css" />	
+        <link rel="stylesheet" href="ASSETS/css/normalize.css" />
+        <link rel="stylesheet" href="ASSETS/css/style.css" />
+        <script src="ASSETS/js/jquery-3.4.1.min.js"></script>
+        <script src="ASSETS/js/utilities.js"></script>      
+    </head>
+    <body>
+        <div id="top"></div>
+        <header class="container">
+            <a href="index.php?r=home" title="Page d'accueil">
+                <img style="color: #FFFFFF" src="ASSETS/images/layout/logo.png" alt="Logo"/>
+            </a>
+            <div>
+                <h2>MON BLOG</h2>
+                <p>Le sport, une passion</p>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.facebook.com/liendirect" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/weareaten" target="_blank"><i class="fab fa-twitter" title="Twitter"></i></a>
+                    <a href="https://fr.linkedin.com/in/destans-romain-4206301b" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <div>
+                    <form action="article_search" method="post">
+                        <input type="text" name="keyword" placeholder="Mot recherché..."/>
+                        <input type="submit" name="submit" value="Chercher"/>
+                    </form>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a id="active" href="index.php?r=home" title="Accueil">ACCUEIL</a></li>
+                    <li><a href="index.php?r=about" title="A Propos">A PROPOS</a></li>	
+                    <li><a href="index.php?r=form_message" title="Contact">CONTACT</a></li>
+                    <?php if(\Session::isLogged() && \Session::get('role') == 'admin'): ?>
+                        <li><a href="index.php?r=show_admin_board" title="Administration">ADMINISTRATION</a></li>
+                    <?php endif; ?>
+                    <?php if(!\Session::isLogged()): ?>                        
+                        <li><a href="index.php?r=login_form" title="Connexion">CONNEXION</a></li>
+                    <?php else: ?>
+                        <li><a href="index.php?r=deconnection" title="déconnexion">DECONNEXION</a></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </header>
+        <div class="container" id="center">
+            <?php if(isset($_SESSION['flash']) && !empty($_SESSION['flash'])): ?>
+                <?php echo '<div id="flash" class="' . \FlashMessage::getType() . '"><p>' . \FlashMessage::getContent() . '</p></div>'; ?>
+            <?php endif ?>
+            <section id="slider">
+                <div id="slide">
+                    <img src="ASSETS/images/slides/1.jpg" alt="Image Slider">
+                </div>
+            </section>
+            <main>
+                <?= $contentPage ?>
+            </main>
+            <aside>
+                <section id="categories">
+                    <h2><span>Catégories</span></h2>
+                    <?php if(!empty($categories)): ?>
+                        <ul>
+                            <?php foreach($categories as $item): ?>
+                                <li><a href="index.php?r=article_category/id/<?= $item['id'] ?>" title="Catégorie - <?= $item['category_name'] ?>"><?= $item['category_name'] ?></a></li>
+                            <?php endforeach ?>	
+                        </ul>
+                    <?php else: ?>
+                        <p>Aucune catégorie</p>
+                    <?php endif ?>
+                </section>		
+                <section id="last-articles">
+                    <h2><span>Derniers articles</span></h2>
+                    <div>
+                        <?php if(!empty($lastArticles)): ?>
+                            <?php foreach($lastArticles as $item): ?>
+                                <a href="index.php?r=article/id/<?= $item['id'] ?>" title="Article - <?= htmlspecialchars($item['title']) ?>"><h3><?= htmlspecialchars($item['title']) ?></h3></a>
+                                <a href="index.php?r=article/id/<?= $item['id'] ?>" title="Article - <?= htmlspecialchars($item['title']) ?>"><img src="ASSETS/images/<?= $item['image'] ?>" alt="<?= $item['image'] ?>"/></a>
+                                <p><?= nl2br(substr(htmlspecialchars($item['content']), 0, 100)) ?></p>	
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>Pas d'articles.</p>
+                        <?php endif ?>
+                    </div>
+                </section>
+                <section id="newsletters">
+                    <h2><span>Newsletter</span></h2>
+                    <form action="newsletter_inscription" method="post">
+                        <input type="text" name="email" placeholder="Saisissez votre email ici" />
+                        <input type="submit" class="btn btn-blue" value="S'inscrire" />
+                    </form>
+                </section>		
+                <section id="links">
+                    <h2><span>Liens</span></h2>
+                    <ul>
+                        <li><a href="https://www.beinsports.com/france/" target="_blank" title="Beinsports">Bein Sports</a></li>
+                        <li><a href="http://www.ffbb.com/" target="_blank" title="Fédération Française De Basketball">Fédération Française De Basketball</a></li>			
+                        <li><a href="https://www.fff.fr/" target="_blank" title="Fédération Française De Football">Fédération Française De Football</a></li>
+                        <li><a href="https://www.sportspourtous.org/" target="_blank" title="SportsPourTous">SportsPourTous</a></li>
+                    </ul>
+                </section>		
+            </aside>
+        </div>
+        <footer class="container">
+            <nav>
+                <ul>
+                    <li><a href="index.php?r=home" title="Accueil">ACCUEIL</a></li>
+                    <li><a href="index.php?r=about" title="A Propos">A PROPOS</a></li>
+                    <li><a href="index.php?r=connection" title="Contact">CONTACT</a></li>
+                    <li><a href="index.php?r=privacy" title="Termes">TERMES</a></li>
+                </ul>
+            </nav>
+            <p>@Copyright yakem.</p>
+            <div id="scrollUp">
+                <a id="logo" href="#top" title="Retour Haut de Page"><i class="fas fa-arrow-circle-up"></i></a>
+            </div>
+        </footer>
+        <script src="ASSETS/js/slider.js"></script>
+        <script src="ASSETS/js/scroll.js"></script>
+        <script src="ASSETS/js/flash-message.js"></script>
+    </body>
+</html>
+<?php
+    \Session::unset('inputs');
+    \Session::unset('errors');
+    \FlashMessage::unsetMessage();
+?>

@@ -1,0 +1,59 @@
+<script src="https://www.google.com/recaptcha/api.js?render=6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1"></script>
+<div id="article">
+	<article>
+		<h2><span><?= htmlspecialchars($article['title']) ?></span></h2>
+		<h4><?= htmlspecialchars(\FormatDate::format($article['created_at'])) ?>, Par <?= htmlspecialchars($article['author']) ?></h4>
+		<img src="assets/images/<?= $article['image'] ?>" alt="<?= $article['image'] ?>"/>
+		<p><?= nl2br(htmlspecialchars($article['content'])) ?></p>
+	</article>
+	<div id="comment-form">
+		<div id="flashForm"></div>
+		<h2><span>Laisser votre message</span></h2>
+		<form class="form-common" id="form-comment" action="#" method="POST">
+			<ul>
+				<input type="hidden" id="token" name="token" />
+				<input id="id-article" type="hidden" name="article_id" value="<?= intval($article['id']) ?>" />
+				<input id="id-parent" type="hidden" name="parent_id" value="0" />
+				<li>
+					<label for="name">Your Name:</label>
+					<input id="name" type="text" name="name" placeholder="Enter Name" />
+					<p>*Veuillez saisir votre nom</p>
+				</li>
+				<li>
+					<label for="mail">Your Email Address:</label>
+					<input id="mail" type="text" name="mail" placeholder="Enter Email Address" />
+					<p>*Veuillez saisir votre email</p>
+				</li>
+				<li>
+					<label for="message">Your Message:</label>
+					<textarea id="message" name="content" placeholder="Enter Message" rows="5" ></textarea>
+					<p>*Veuillez saisir votre message</p>
+				</li>
+				<li>
+					<input class="btn btn-blue" type="submit" value="Envoyer" />
+					<a href="#" class="btn btn-red" id="btn-reset" title="Effacer le formulaire">Effacer</a>
+				</li>
+			</ul>
+		</form>
+	</div>
+	<div id="comment-list" data-id="<?= $article['id'] ?>"></div>	
+	<div class="related-articles">
+		<h2><span>Related articles</span></h2>
+		<?php if(!empty($relatedArticles)): ?>
+			<?php foreach($relatedArticles as $item): ?>
+				<a href="index.php?r=article/id/<?= $item['id'] ?>"  title="Article relaté"><img src="assets/images/<?= $item['image'] ?>" alt="<?= $item['image'] ?>"/></a>
+			<?php endforeach ?>
+		<?php else: ?>
+			<p>:-(</p>
+		<?php endif ?>
+	</div>
+</div>
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1', {action: 'submit'}).then(function(token) {
+			// Add your logic to submit to your backend server here.
+			document.getElementById("token").value = token;
+		});
+	});
+</script>
+<script src="ASSETS/js/form.js"></script>

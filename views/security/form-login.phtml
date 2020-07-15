@@ -1,0 +1,31 @@
+<div class="form-common">
+   <form action="index.php?r=connection" method="post">
+      <h1>Identification</h1>
+      <ul>
+         <input type="hidden" id="token" name="token">
+         <input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
+         <li>
+            <label for="username">Identifiant</label>
+            <input id="username" type="text" placeholder="Username" name="username" value="<?= $_SESSION['inputs']['username'] ?? '' ?>" />
+         </li>
+         <li>
+            <label for="passw">Mot de passe</label>
+            <input type="password" placeholder="Mot de passe" name="password" />
+         </li>
+         <li>
+            <input class="btn btn-blue" type="submit" value="Se connecter" />
+         </li>
+      </ul>
+   </form>
+   <a href="recovery_form" title="Récupérer mot de passe">Mot de passe oublié</a>
+</div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1"></script>
+<script>
+   grecaptcha.ready(function() {
+      grecaptcha.execute('6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1', {action: 'submit'}).then(function(token) {
+         // Add your logic to submit to your backend server here.
+         document.getElementById("token").value = token;
+         // console.log(token);
+      });
+   });
+  </script>

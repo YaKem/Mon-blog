@@ -1,0 +1,36 @@
+<h2><span>Gestion des articles</span></h2>
+<a href="index.php?r=form_article" class="btn btn-blue" data-tab="0" title="Créer un article">Ajouter un article</a>
+<?php if(!empty($articles)): ?>
+    <table id="tarticle">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Image</th>
+                <th>Auteur</th>
+                <th>Catégorie</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <?php foreach($articles as $article): ?>
+            <tbody>
+                <tr>
+                    <td><?= htmlspecialchars($article['title']) ?></td>
+                    <td><img src="assets/images/<?= $article['image'] ?>" /></td>
+                    <td><?= htmlspecialchars($article['author']) ?></td>
+                    <td><?= htmlspecialchars($article['category_name']) ?></td>
+                    <td><?= htmlspecialchars(\FormatDate::format($article['created_at'])) ?></td>
+                    <td>
+                        <a href="index.php?r=form_article/id/<?= intval($article['id']) ?>" data-tab="0" title="Modifier l'article"><i class="fas fa-edit"></i></a>
+                        <a href="index.php?r=delete_article/id/<?= intval($article['id']) ?>" data-tab="0" title="Supprimer l'article"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6"><?= nl2br(htmlspecialchars(substr($article['content'], 0, 500))) ?></td>
+                </tr>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Aucun article</p>
+<?php endif ?>

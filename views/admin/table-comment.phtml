@@ -1,0 +1,30 @@
+<h2><span>Gestion des commentaires</span></h2>
+<?php if(!empty($comments)): ?>
+    <table id="tcomment">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Article</th>
+                <th>Date</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <?php foreach($comments as $comment): ?>
+            <tbody>
+                <tr>
+                    <td><?= htmlspecialchars($comment['name']) ?></td>
+                    <td><?= htmlspecialchars($comment['article']) ?></td>
+                    <td><?= htmlspecialchars(\FormatDate::format($comment['created_at'])) ?></td>
+                    <td><a href="mailto:<?= htmlspecialchars($comment['email']) ?>" title="Envoyer un email"><?= htmlspecialchars($comment['email']) ?></a></td>
+                    <td><a href="index.php?r=delete_comment/id/<?= intval($comment['id']) ?>" data-tab="1" title="Supprimer le commentaire"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><?= nl2br(htmlspecialchars($comment['content'])) ?></td>
+                </tr>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Aucun commentaire</p>
+<?php endif ?>

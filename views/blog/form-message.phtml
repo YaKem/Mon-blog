@@ -1,0 +1,40 @@
+<div id="contact">
+	<h2><span>Contact us</span></h2>
+	<form class="form-common" action="index.php?r=create_message" method="post">
+		<ul>
+			<input type="hidden" id="token" name="token">
+			<input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
+			<li>
+				<label for="firstname">Your First Name:</label>
+				<input id="firstname" type="text" name="firstname" placeholder="Enter first name" value="<?= $_SESSION['inputs']['firstname'] ?? '' ?>"/>
+				<p><?= $_SESSION['errors']['firstname'] ?? '' ?></p>
+			</li>
+			<li>
+				<label for="lastname">Your Last Name:</label>
+				<input id="lastname" type="text" name="lastname" placeholder="Enter Last name" value="<?= $_SESSION['inputs']['lastname'] ?? '' ?>"/>
+				<p><?= $_SESSION['errors']['lastname'] ?? '' ?></p>
+			</li>
+			<li>
+				<label for="mail">Your Email Address:</label>
+				<input id="mail" type="text" name="email" placeholder="Enter Email Address" value="<?= $_SESSION['inputs']['email'] ?? '' ?>"/>
+				<p><?= $_SESSION['errors']['email'] ?? '' ?></p>
+			</li>
+			<li>
+				<label for="message">Your Message:</label>
+				<textarea id="message" name="content" placeholder="Enter Message" rows="5"><?= $_SESSION['inputs']['content'] ?? '' ?></textarea>
+				<p><?= $_SESSION['errors']['content'] ?? '' ?></p>
+			</li>
+			<li>
+				<input class="btn btn-blue" type="submit" name="submit" value="Créer"/>
+			</li>
+		</ul>
+	</form>
+</div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1"></script>
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1', {action: 'submit'}).then(function(token) {
+			document.getElementById("token").value = token;
+		});
+	});
+</script>

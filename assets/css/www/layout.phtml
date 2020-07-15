@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MON PORTFOLIO</title>
+        <link rel="icon" type="image/png" href="img/logo.png" />
+        <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+        <script src="js/jq.js"></script>
+        <script src="https://kit.fontawesome.com/ac5628c3f3.js"></script>
+    </head>
+    <body>
+        <div id="top"></div>
+        <header>
+            <?php if(!isset($_SESSION['login'])): ?>
+                <a href="index.php"><img src="img/logo.png" alt="image laptop" /></a>
+            <?php endif ?>
+            <nav>
+                <?php if(!isset($_SESSION['login'])): ?>
+                    <a href="index.php"><i class="fa fa-home" aria-hidden="true"></i>Accueil</a>
+                    <a href="#achievements"><i class="fas fa-pencil-alt"></i>Réalisations</a>
+                    <a href="#formContact"><i class="fas fa-user"></i>Contact</a>               
+                    <a href="login.php"><i class="fas fa-key"></i>Connexion</a>
+                <?php else: ?>
+                    <a href="deconnect.php"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
+                <?php endif ?>
+            </nav>
+        </header>
+        <main>
+
+            <?php include $template.'.phtml'; ?>
+
+        </main>
+        <footer>
+            <img src="img/logo.png" alt="my logo" />
+            <p>TOUS DROITS RÉSERVÉS© 2019</p>
+            <div id="scrollUp">
+                <a href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
+            </div>
+        </footer>
+    </body>
+</html>

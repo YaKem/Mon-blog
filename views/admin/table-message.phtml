@@ -1,0 +1,31 @@
+<h2><span>Messages</span></h2>
+<?php if(!empty($messages)): ?>
+    <table id="tmessage">
+        <thead>
+            <tr>                   
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <?php foreach($messages as $message): ?>
+            <tbody>
+                <tr>
+                    <td><?= strtoupper(htmlspecialchars($message['lastName'])) ?></td>
+                    <td><?= ucfirst(strtolower(htmlspecialchars($message['firstName']))) ?></td>
+                    
+                    <td><a href="mailto<?= htmlspecialchars($message['email']) ?>" title="Envoyer un email"><?= htmlspecialchars($message['email']) ?></a></td>
+                    <td><?= \FormatDate::format(htmlspecialchars($message['created_at'])) ?></td>
+                    <td><a href="index.php?r=delete_message/id/<?= intval($message['id']) ?>" data-tab="3" title="Supprimer le message"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><?= nl2br(htmlspecialchars($message['content'])) ?></td>
+                </tr>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Aucun message</p>
+<?php endif ?>

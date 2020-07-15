@@ -1,0 +1,28 @@
+<div class="form-common">
+   <form action="pssw_update" method="post">
+      <h1>Nouveau mot de passe</h1>
+      <ul>
+         <input type="hidden" id="token" name="token">
+         <input type="hidden" name="email" value="<?= $email ?? '' ?><?= $_SESSION['inputs']['email'] ?? '' ?>">
+         <li>
+            <label for="passw1">Nouveau mot de passe</label>
+            <input id="passw1" type="password" placeholder="Mot de passe" name="password" />
+         </li>
+         <li>
+         <label for="passw2">Confirmation mot de passe</label>
+            <input id="passw2" type="password" placeholder="Veuillez ressaisir votre mot de passe" name="password2" />
+         </li>         
+         <li>
+            <input class="btn btn-blue" type="submit" value="Modifier" />
+         </li>
+      </ul>
+   </form>
+</div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1"></script>
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1', {action: 'submit'}).then(function(token) {
+			document.getElementById("token").value = token;
+		});
+	});
+</script>
