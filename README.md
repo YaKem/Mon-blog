@@ -24,12 +24,3 @@ Layout affiche :
     Barre d'abonnement à la newsletter
     Liens externes
     Dans le footer onglet vers les termes, conditions d'accès et d'utilisation du blog
-
-Administration
-    Compte blog
-        pseudo: admin
-        mdp:    mdpadmin
-    Compte Gmail associé
-        email:  jdoe.ad.blog@gmail.com
-        mdp:    mdpjohndoe
-
