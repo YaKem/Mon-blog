@@ -4,7 +4,7 @@
 <div id="home">
 	<?php foreach($articles as $article): ?>
 		<article>
-			<h2><a href="index?r=article/id/<?= intval($article['id']) ?>" title="Article"><span><?= htmlspecialchars($article['title']) ?></span></a></h2>
+			<h2><a href="index.php?r=article/id/<?= intval($article['id']) ?>" title="Article"><span><?= htmlspecialchars($article['title']) ?></span></a></h2>
 			<h4><?= \FormatDate::format(htmlspecialchars($article['created_at'])) ?>, Par <a href="index.php?r=about" title="A Propos"><?= htmlspecialchars($article['author']) ?></a></h4>
 			<img src="ASSETS/images/<?= $article['image'] ?>" alt="<?= $article['image'] ?>"/>
 			<p><?= nl2br(substr(htmlspecialchars($article['content']), 0, 250)) ?></p>

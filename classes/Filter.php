@@ -50,7 +50,7 @@
          */
         public function checkEmail(string $email): bool
         {
-            $pattern = '%^[a-zA-Z0-9]+@{1}[a-zA-Z0-9]+\.{1}[a-zA-Z0-9]{2,}$%';
+            $pattern = '%^[a-zA-Z0-9\.]+@{1}[a-zA-Z0-9]+\.{1}[a-zA-Z0-9]{2,}$%';
             if(preg_match($pattern, $email)) {
                 return true;
             } else {

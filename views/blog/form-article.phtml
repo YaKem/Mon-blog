@@ -1,6 +1,6 @@
 <div class="form-common">
     <h1><?= $title ?></h1>
-    <form action="create_article" method="post" enctype="multipart/form-data">
+    <form action="index.php?r=create_article" method="post" enctype="multipart/form-data">
         <ul>
             <input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
             <input type="hidden" name="id" value="<?= $article['id'] ?? '' ?>" />

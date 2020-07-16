@@ -135,10 +135,14 @@
          */
         public function recoveryForm(): void
         {
+            // On génère un token avec pour clef 'login' contre faille csrf
+            $csrfToken = \Csrf::generateToken('recovery');
+
             // On créé la vue du formulaire de récupération de mot de passe, on lui passe dans un tableau tous les paramètres nécessaires.
             \Renderer::render('security/form-recovery', [
                 'categories'   => $this->categories,
-                'lastArticles' => $this->lastArticles
+                'lastArticles' => $this->lastArticles,
+                'csrfToken'    => $csrfToken
             ]);
         }
 
@@ -150,51 +154,79 @@
          */
         public function recoveryPassword(): void
         {
-            // Pause de 1s, sécurité contre faille force brut
-            sleep(1);
-
-            $params = [];
-
-            $email = $_POST['email'];
-
-            // On vérifie si l'email existe dans la bdd
-            if($this->model->checkEmail($email) == false) {
-
-                // Si non on affiche un message flash
-                \FlashMessage::setMessage('warning', 'Votre email est inconnu !');
-
-                // Redirection vers le formulaire de login
-                \Http::redirectTo('login_form');
+            // On vérifie si on vient bien du formulaire de récupération du mdp
+            if(!\Csrf::checkToken(500, HOST . '/index.php?r=recovery_form', 'recovery')) {
+                \FlashMessage::setMessage('danger', 'Vous êtes un robot !');
+                \Http::redirectTo('home');
             }
 
-            // On stocke l'email dans le tableau $params
-            $params['email'] = $email;
+            if($_SERVER["REQUEST_METHOD"] == "POST") {
+                // Pause de 1s, sécurité contre faille force brut
+                sleep(1);
 
-            // On récupère le nom associé à l'email, on le stocke dans $params
-            $name = $this->model->getName($email);
-            $params['name'] = $name;
+                $params = [];
 
-            // On créé un token, qui est stocké dans $params et dans la bdd
-            $token = bin2hex(random_bytes(64));
-            $params['token'] = $token;
-            $this->model->setToken($email, $token);
+                $email = $_POST['email'];
 
-            // On stocke le contenu html du message envoyé par mail, on le stocke dans $params
-            $content = VIEWS . '/security/msg-recovery.html';
-            $params['content'] = $content;
+                if(!$this->filter->checkEmail($email)) {
+                    \FlashMessage::setMessage('warning', 'Veuillez saisir un email valide');
+                    \Http::redirectTo('recovery_form');
+                }
 
-            // On instancie la classe Email de PHPMailer, puis on envoie l'email dans lequel on passe l'ensemble des variables dans le tableau $params
-            $mail = new \PhpMailer\Email();
-            $mail->send($params);
+                // On vérifie si l'email existe dans la bdd
+                if($this->model->checkEmail($email) == false) {
 
-            // On décrément le compteur de tentative de changement de mdp
-            $_SESSION['counter'] = 2;
+                    // Si non on affiche un message flash
+                    \FlashMessage::setMessage('warning', 'Votre email est inconnu !');
 
-            // On affiche un message flash pour indiquer l'envoi d'un email de recouvrement de mdp
-            \FlashMessage::setMessage('success', 'Un email vient de vous être envoyé !');
+                    // Redirection vers le formulaire de login
+                    \Http::redirectTo('recovery_form');
+                }
 
-            // Redirection vers le formulaire de login
-            \Http::redirectTo('login_form');
+                // On instancie la classe Recaptcha
+                $recaptcha = new \Recaptcha();
+
+                // On vérifie la réponse du recaptcha
+                if($recaptcha->check() == true) {
+
+                    // On stocke l'email dans le tableau $params
+                    $params['email'] = $email;
+
+                    // On récupère le nom associé à l'email, on le stocke dans $params
+                    $name = $this->model->getName($email);
+                    $params['name'] = $name;
+
+                    // On créé un token, qui est stocké dans $params et dans la bdd
+                    $token = bin2hex(random_bytes(64));
+                    $params['token'] = $token;
+                    $this->model->setToken($email, $token);
+
+                    // On stocke le contenu html du message envoyé par mail, on le stocke dans $params
+                    $content = VIEWS . '/security/msg-recovery.html';
+                    $params['content'] = $content;
+
+                    // On instancie la classe Email de PHPMailer, puis on envoie l'email dans lequel on passe l'ensemble des variables dans le tableau $params
+                    $mail = new \PhpMailer\Email();
+                    $mail->send($params);
+
+                    // On décrément le compteur de tentative de changement de mdp
+                    $_SESSION['counter'] = 2;
+
+                    // On affiche un message flash pour indiquer l'envoi d'un email de recouvrement de mdp
+                    \FlashMessage::setMessage('success', 'Un email vient de vous être envoyé !');
+
+                    // Redirection vers le formulaire de login
+                    \Http::redirectTo('login_form');
+
+                } else {
+
+                    // On affiche un message flash pour inviter à ressaisir les identifiants et mdp car action suspecte
+                    \FlashMessage::setMessage('warning', 'Peut-être êtes-vous un robot!');
+
+                    // Redirection vers formulaire de login
+                    \Http::redirectTo('login_form');
+                }
+            }
         }
 
         /**

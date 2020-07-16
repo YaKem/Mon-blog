@@ -34,7 +34,6 @@
                     } else {
                         $http_referer = $_SERVER['HTTP_REFERER'];
                     }
-
                     if($http_referer == $referer) {
                         if($_SESSION[$name . '_token_time'] - time() < $duration) {
                             return true;

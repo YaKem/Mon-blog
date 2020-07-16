@@ -156,6 +156,7 @@
          */
         public function createArticle($params): void
         {
+            var_dump(HOST . '/index.php?r=form_article');
             // On vérifie si on vient bien du formulaire de création/màj d'un article
             if(!\Csrf::checkToken(500, HOST . '/index.php?r=form_article', 'article')) {
                 \FlashMessage::setMessage('danger', 'Vous êtes un robot !');

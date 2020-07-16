@@ -1,7 +1,19 @@
 <div class="form-common">
-    <form action="recovery_password" method="post">
+    <form action="index.php?r=recovery_password" method="post">
+        <input type="hidden" id="token" name="token">
+        <input type="hidden" name="csrf-token" id="csrf-token" value="<?= $csrfToken; ?>"/>
         <label for="mail">Email</label>
         <input type="text" name="email" placeholder="Veuillez saisir votre email" />
         <input class="btn btn-blue" type="submit" value="Envoyer" />
     </form>
 </div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1"></script>
+<script>
+   grecaptcha.ready(function() {
+      grecaptcha.execute('6Le2FP8UAAAAAI4q2YfMF0vgiXJz3m0bY8dXLnF1', {action: 'submit'}).then(function(token) {
+         // Add your logic to submit to your backend server here.
+         document.getElementById("token").value = token;
+         // console.log(token);
+      });
+   });
+  </script>
